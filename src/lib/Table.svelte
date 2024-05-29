@@ -154,7 +154,7 @@
 	}
 
 	.tableData {
-		padding: 5px;
+		padding: 2px;
 		text-align: left;
 		font-size: 15px;
 		position: relative;
