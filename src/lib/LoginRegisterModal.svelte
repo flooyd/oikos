@@ -6,8 +6,8 @@
 	export let modalOpen;
 
 	let username = '';
-	let email = 'lordrahl16@gmail.com';
-	let password = '123456';
+	let email = '';
+	let password = '';
 	let disabled = false;
 	let registerSuccess = false;
 	let errors: any[] = [];
