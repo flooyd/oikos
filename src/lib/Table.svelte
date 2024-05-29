@@ -14,6 +14,7 @@
 	let resizingColumn: string | null = null;
 
 	let columnWidths: Record<string, number> = {};
+	let rowHeights: Record<string, number> = {};
 
 	const handleClickColumn = (column: string) => {
 		if (sortColumn === column) {
@@ -64,23 +65,35 @@
 			columnWidths[column] = cellWidth;
 		}
 	};
+	const getCellHeight = (cell: any, column: string) => {
+		const cellHeight = cell.getBoundingClientRect().height;
+		console.log(cell, cell.getBoundingClientRect());
+		if (cellHeight > rowHeights[cell.id]) {
+			console.log(true);
+			rowHeights[cell.id] = cellHeight;
+		}
+	};
 
 	$: ready
 		? data.forEach((row, i) => {
 				columns.forEach((column, j) => {
-					const cell = document.getElementById(`${row.id}-${j}`);
-					if (!cell) {
+					const widthCell = document.getElementById(`${row.id}-${j}`);
+					if (!widthCell) {
 						return;
 					}
-					getCellWidth(cell, column);
-					console.log(column, columnWidths[column]);
+					getCellWidth(widthCell, column);
+					const heightCell = document.getElementById(`${row.id}`);
+					getCellHeight(heightCell, column);
 				});
 			})
 		: null;
 
 	onMount(() => {
 		columns.forEach((column, j) => {
-			columnWidths[column] = 1;
+			columnWidths[column] = 50;
+		});
+		data.forEach((row, i) => {
+			rowHeights[row.id] = 20;
 		});
 		ready = true;
 	});
@@ -126,20 +139,12 @@
 		{/each}
 	</div>
 	{#each data as row, i}
-		<button
-			class="tableRow"
-			on:click={() => handleClickRow(row)}
-			role="button"
-			on:keydown={() => {
-				console.log('hi');
-			}}
-			tabindex={0}
-		>
+		<button class="tableRow" id={row.id} on:click={() => handleClickRow(row)} tabindex={0}>
 			{#each columns as column, j}
 				<div
 					class={getColumnHeaderClass(column)}
 					id={row.id + '-' + j}
-					style="width: {columnWidths[column]}px;"
+					style="width: {columnWidths[column]}px; height: {rowHeights[row.id]}px;"
 				>
 					{row[column]}
 				</div>
@@ -154,10 +159,12 @@
 	}
 
 	.tableData {
-		padding: 2px;
-		text-align: left;
 		font-size: 15px;
 		position: relative;
+		display: flex;
+		align-items: center;
+		padding: 5px;
+		min-height: fit-content;
 	}
 
 	.tableData.date {
@@ -193,6 +200,7 @@
 
 	.tableHead button {
 		border: none;
+		padding: 0px;
 	}
 
 	.tableHead button:hover {

@@ -26,7 +26,7 @@
 			username: 'user1',
 			createdAt: new Date().toLocaleString(),
 			updatedAt: new Date().toLocaleString(),
-			title: 'this is an example of a post t',
+			title: 'this is an example of a post that has enough text to wrap to a new line, but it doess not automatically wrap to a new line, so it is cut off',
 			id: 1,
 			comments: 0,
 			upvotes: 0,
