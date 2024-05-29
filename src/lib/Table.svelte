@@ -26,36 +26,10 @@
 	};
 
 	$: data = [...data].sort((a, b) => {
-		if (sortColumn === 'username') {
-			return sortDirection === 'asc'
-				? a.username.localeCompare(b.username)
-				: b.username.localeCompare(a.username);
-		} else if (sortColumn === 'created At') {
-			return sortDirection === 'asc'
-				? a.createdAt.localeCompare(b.createdAt)
-				: b.createdAt.localeCompare(a.createdAt);
-		} else if (sortColumn === 'title') {
-			return sortDirection === 'asc'
-				? a.title.localeCompare(b.title)
-				: b.title.localeCompare(a.title);
-		} else if (sortColumn === 'updated At') {
-			return sortDirection === 'asc'
-				? a.updatedAt.localeCompare(b.updatedAt)
-				: b.updatedAt.localeCompare(a.updatedAt);
-		} else if (sortColumn === 'upvotes') {
-			return sortDirection === 'asc' ? a.upvotes - b.upvotes : b.upvotes - a.upvotes;
-		} else if (sortColumn === 'downvotes') {
-			return sortDirection === 'asc' ? a.downvotes - b.downvotes : b.downvotes - a.downvotes;
-		} else if (sortColumn === 'id') {
-			return sortDirection === 'asc' ? a.id - b.id : b.id - a.id;
-		} else if (sortColumn === 'content') {
-			return sortDirection === 'asc'
-				? a.content.localeCompare(b.content)
-				: b.content.localeCompare(a.content);
-		} else if (sortColumn === 'author') {
-			return sortDirection === 'asc'
-				? a.author.localeCompare(b.author)
-				: b.author.localeCompare(a.author);
+		if (sortDirection === 'asc') {
+			return a[sortColumn] > b[sortColumn] ? 1 : -1;
+		} else {
+			return a[sortColumn] < b[sortColumn] ? 1 : -1;
 		}
 	});
 
@@ -67,9 +41,7 @@
 	};
 	const getCellHeight = (cell: any, column: string) => {
 		const cellHeight = cell.getBoundingClientRect().height;
-		console.log(cell, cell.getBoundingClientRect());
 		if (cellHeight > rowHeights[cell.id]) {
-			console.log(true);
 			rowHeights[cell.id] = cellHeight;
 		}
 	};
@@ -159,7 +131,7 @@
 	}
 
 	.tableData {
-		font-size: 15px;
+		font-size: 20px;
 		position: relative;
 		display: flex;
 		align-items: center;
@@ -185,6 +157,7 @@
 	.tableData.longText {
 		flex: 1;
 		min-width: 250px;
+		max-width: 50%;
 	}
 
 	.tableHead {
