@@ -27,8 +27,8 @@
 	</div>
 	<div class="options">
 		{#if !$user}
-			<button on:click={handleClickRegister}>Register</button>
 			<button on:click={handleClickLogin}>Login</button>
+			<button on:click={handleClickRegister}>Register</button>
 		{/if}
 		{#if $user}
 			<button class="user">{$user.username}</button>
