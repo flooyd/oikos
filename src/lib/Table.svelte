@@ -126,7 +126,7 @@
 		{/each}
 	</div>
 	{#each data as row, i}
-		<div
+		<button
 			class="tableRow"
 			on:click={() => handleClickRow(row)}
 			role="button"
@@ -144,7 +144,7 @@
 					{row[column]}
 				</div>
 			{/each}
-		</div>
+		</button>
 	{/each}
 </div>
 
@@ -214,9 +214,11 @@
 		border-top: none;
 		display: flex;
 		background: white;
+		color: black;
 		cursor: pointer;
 		width: fit-content;
 		min-width: calc(100vw - 40px);
+		padding: 0px;
 	}
 
 	.tableRow:hover {
